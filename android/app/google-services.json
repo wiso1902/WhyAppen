@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "597814628837",
+    "firebase_url": "https://why-appen-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "why-appen",
+    "storage_bucket": "why-appen.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:597814628837:android:bb5b4c2156020609215f0c",
+        "android_client_info": {
+          "package_name": "com.example.why_appen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "597814628837-i165kpqhkln07rlatlpgatl3vv6cmdi7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3keA1wTbYUKEXVY5HWTLBKk2xdFjeI-8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "597814628837-i165kpqhkln07rlatlpgatl3vv6cmdi7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
