@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:why_appen/whys_goda_hjartan/goda_hjartan_page.dart';
 import 'package:why_appen/widgets/bottom_nav.dart';
-import 'package:why_appen/home_page/catagory_item.dart';
-import 'package:why_appen/home_page/test_button.dart';
-
-import '../addData_page/add_data.dart';
-import '../viewData_page/view_data.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -13,52 +9,48 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-          child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.orange,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: TextButton(
-                onPressed: () => Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => AddData())),
-                child: Text(
-                  'Lägg till träning',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 32),
+        child: Column(
+          children: [
+            SizedBox(height: 30,),
+            Center(
+              child: Hero(
+                tag: 'godaHjartan',
+                child: Material(
+                  borderRadius: BorderRadius.circular(28),
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  elevation: 8,
+                  color: Colors.orange,
+                  child: InkWell(
+                    splashColor: Colors.orange,
+                    onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => GodaHjartan())),
+                    child: Column(
+                      children: [
+                       Ink.image(
+                            width: 150,
+                            height: 100,
+                            fit: BoxFit.cover,
+                            image: AssetImage('assets/images/goda_hjartan.jpg'),
+                          ),
+                        SizedBox(
+                          height: 6
+                        ),
+                        Text(
+                          "Why's Goda Hjärtan",
+                          style: TextStyle(fontSize: 15, color: Colors.white),
+                        ),
+                        SizedBox(
+                            height: 6
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: Colors.orange,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: TextButton(
-                onPressed: () => Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => ViewData())),
-                child: Text(
-                  'Se träningar',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 32),
-                ),
-              ),
-            ),
-          ),
-        ],
-      )),
+          ],
+        ),
+      ),
       bottomNavigationBar: BottomNavBar(),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -21,24 +22,23 @@ class _ViewDataState extends State<ViewData> {
       .orderBy('totalTr', descending: true)
       .snapshots();
 
-  String imagePath ="";
+
   bool isChecked = false;
   late String total = "0";
 
   Future getImage(String userID) async {
-    DocumentSnapshot getImagePath =
-        await FirebaseFirestore.instance.collection('users').doc(userID).get();
-    setState(() {
-      imagePath = getImagePath.get('imagePath');
-    });
+    DocumentSnapshot getImagePath = await FirebaseFirestore.instance.collection('users').doc(userID).get();
+    return getImagePath.get('imagePath');
   }
 
   getTotal() async {
     int totalInt;
-    DocumentSnapshot ds = await FirebaseFirestore.instance.collection('total').doc('total').get();
+    DocumentSnapshot ds = await FirebaseFirestore.instance.collection('total')
+        .doc('total')
+        .get();
     totalInt = ds.get('total');
     setState(() {
-      total = (totalInt*20).toString();
+      total = (totalInt * 20).toString();
     });
   }
 
@@ -57,16 +57,14 @@ class _ViewDataState extends State<ViewData> {
           actions: [
             IconButton(
                 onPressed: () {
-                  setState(() => isChecked =! isChecked);
+                  setState(() => isChecked = !isChecked);
                   getTotal();
                 },
                 icon: Icon(FontAwesomeIcons.arrowUpWideShort))
           ],
           title: Center(child: Text('Insamlat: $total Kr')),
         ),
-        body: SafeArea(
-          child: isChecked ? buildStreamBuilderDate() : buildStreamBuilderTop(),
-        ),
+        body: isChecked ? buildStreamBuilderTop() : buildStreamBuilderDate(),
     );
   }
 
@@ -82,21 +80,22 @@ class _ViewDataState extends State<ViewData> {
         }
         final data = snapshot.requireData;
         return ListView.builder(
-            itemCount: data.size,
-            itemBuilder: (context, index) {
-              QueryDocumentSnapshot user = snapshot.data!.docs[index];
-              String userID = user['userID'];
-              getImage(userID);
-              return Card(
-                child: ListTile(
-                  leading: CircleAvatar(
-                      radius: 30, backgroundImage: NetworkImage(imagePath)),
-                  title: Text('${data.docs[index]['name']}'),
-                  subtitle: Text('Träningar ${data.docs[index]['totalTr']}'),
-                  trailing: Text(' + ${data.docs[index]['totalTr'] * 20 } Kr', style: TextStyle(color: Colors.green),),
-                ),
-              );
-            });
+              itemCount: data.size,
+              itemBuilder: (context, index) {
+                QueryDocumentSnapshot user = snapshot.data!.docs[index];
+                String userID = user['userID'];
+
+                return Card(
+                  child: ListTile(
+                    leading: CircleAvatar(radius: 30, backgroundImage: NetworkImage('https://firebasestorage.googleapis.com/v0/b/why-appen.appspot.com/o/why-avatar.png?alt=media&token=47dd9052-b409-4254-87d4-53f1ded04869')),
+                    title: Text('${data.docs[index]['name']}'),
+                    subtitle: Text('Träningar ${data.docs[index]['totalTr']}'),
+                    trailing: Text(' + ${data.docs[index]['totalTr'] * 20 } Kr',
+                      style: TextStyle(color: Colors.green),),
+                  ),
+                );
+              }
+        );
       },
     );
   }
@@ -120,8 +119,7 @@ class _ViewDataState extends State<ViewData> {
               getImage(userID);
               return Card(
                 child: ListTile(
-                  leading: CircleAvatar(
-                      radius: 30, backgroundImage: NetworkImage(imagePath)),
+                  leading: Text(userID),
                   title: Text('${data.docs[index]['name']}'),
                   subtitle: Text('${data.docs[index]['träning']}'),
                   trailing: Text('${data.docs[index]['datum']}'),

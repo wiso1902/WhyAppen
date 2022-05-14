@@ -12,10 +12,11 @@ class BackroundImage extends StatelessWidget {
         colors: [Colors.deepOrange, Colors.orangeAccent],
         begin: Alignment.bottomCenter,
         end: Alignment.center,
-      ).createShader(bounds),blendMode: BlendMode.darken,
+      ).createShader(bounds),
+      blendMode: BlendMode.darken,
       child: Container(
         decoration: BoxDecoration(
-          image:  DecorationImage(
+          image: DecorationImage(
             image: AssetImage('assets/images/backround.jpg'),
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(Colors.orange, BlendMode.darken),
