@@ -8,11 +8,18 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Why Menyn", style: TextStyle(color: Colors.white),),
+      ),
       body: SafeArea(
-        child: Column(
-          children: [
-            SizedBox(height: 30,),
-            Center(
+        child: GridView.count(
+          primary: false,
+          padding: const EdgeInsets.all(34),
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+          crossAxisCount: 2,
+          children:[
+            Container(
               child: Hero(
                 tag: 'godaHjartan',
                 child: Material(
@@ -38,9 +45,6 @@ class HomePage extends StatelessWidget {
                         Text(
                           "Why's Goda Hjärtan",
                           style: TextStyle(fontSize: 15, color: Colors.white),
-                        ),
-                        SizedBox(
-                            height: 6
                         ),
                       ],
                     ),

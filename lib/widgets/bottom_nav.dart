@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:why_appen/create_user_page/create_user.dart';
 import 'package:why_appen/profile_page/profile.dart';
 
 import '../auth_service.dart';

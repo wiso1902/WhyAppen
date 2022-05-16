@@ -1,8 +1,8 @@
 import 'package:animations/animations.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:path/path.dart';
 
 class ViewData extends StatefulWidget {
   const ViewData({Key? key}) : super(key: key);
@@ -79,22 +79,32 @@ class _ViewDataState extends State<ViewData> {
           return Text('Datan hämtas');
         }
         final data = snapshot.requireData;
-        return ListView.builder(
-              itemCount: data.size,
-              itemBuilder: (context, index) {
-                QueryDocumentSnapshot user = snapshot.data!.docs[index];
-                String userID = user['userID'];
-
-                return Card(
-                  child: ListTile(
-                    leading: CircleAvatar(radius: 30, backgroundImage: NetworkImage('https://firebasestorage.googleapis.com/v0/b/why-appen.appspot.com/o/why-avatar.png?alt=media&token=47dd9052-b409-4254-87d4-53f1ded04869')),
-                    title: Text('${data.docs[index]['name']}'),
-                    subtitle: Text('Träningar ${data.docs[index]['totalTr']}'),
-                    trailing: Text(' + ${data.docs[index]['totalTr'] * 20 } Kr',
-                      style: TextStyle(color: Colors.green),),
-                  ),
-                );
-              }
+        return AnimationLimiter(
+          child: ListView.builder(
+                itemCount: data.size,
+                itemBuilder: (context, index) {
+                  QueryDocumentSnapshot user = snapshot.data!.docs[index];
+                  String userID = user['userID'];
+                  return AnimationConfiguration.staggeredList(
+                    position: index,
+                    duration: const Duration(seconds: 1),
+                    child: SlideAnimation(
+                      verticalOffset: 44,
+                      child: FadeInAnimation(
+                        child: Card(
+                          child: ListTile(
+                            leading: CircleAvatar(radius: 30, backgroundImage: NetworkImage('https://firebasestorage.googleapis.com/v0/b/why-appen.appspot.com/o/why-avatar.png?alt=media&token=47dd9052-b409-4254-87d4-53f1ded04869')),
+                            title: Text('${data.docs[index]['name']}'),
+                            subtitle: Text('Träningar ${data.docs[index]['totalTr']}'),
+                            trailing: Text(' + ${data.docs[index]['totalTr'] * 20 } Kr',
+                              style: TextStyle(color: Colors.green),),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                }
+          ),
         );
       },
     );
@@ -111,21 +121,32 @@ class _ViewDataState extends State<ViewData> {
           return Text('Datan hämtas');
         }
         final data = snapshot.requireData;
-        return ListView.builder(
-            itemCount: data.size,
-            itemBuilder: (context, index) {
-              QueryDocumentSnapshot user = snapshot.data!.docs[index];
-              String userID = user['userID'];
-              getImage(userID);
-              return Card(
-                child: ListTile(
-                  leading: Text(userID),
-                  title: Text('${data.docs[index]['name']}'),
-                  subtitle: Text('${data.docs[index]['träning']}'),
-                  trailing: Text('${data.docs[index]['datum']}'),
-                ),
-              );
-            });
+        return AnimationLimiter(
+          child: ListView.builder(
+              itemCount: data.size,
+              itemBuilder: (context, index) {
+                QueryDocumentSnapshot user = snapshot.data!.docs[index];
+                String userID = user['userID'];
+                getImage(userID);
+                return AnimationConfiguration.staggeredList(
+                  position: index,
+                  duration: const Duration(seconds: 1),
+                  child: SlideAnimation(
+                    verticalOffset: 44,
+                    child: FadeInAnimation(
+                      child: Card(
+                        child: ListTile(
+                          leading: CircleAvatar(radius: 30, backgroundImage: NetworkImage('https://firebasestorage.googleapis.com/v0/b/why-appen.appspot.com/o/why-avatar.png?alt=media&token=47dd9052-b409-4254-87d4-53f1ded04869')),
+                          title: Text('${data.docs[index]['name']}'),
+                          subtitle: Text('${data.docs[index]['träning']}'),
+                          trailing: Text('${data.docs[index]['datum']}'),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }),
+        );
       },
     );
   }

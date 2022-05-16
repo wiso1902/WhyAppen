@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:why_appen/auth_service.dart';
 import 'package:why_appen/home_page/home_page.dart';
+import 'package:why_appen/profile_page/edit_profile.dart';
 import 'package:why_appen/sign_in_page/sign_in.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +17,9 @@ Future <void> main() async {
   runApp(MyApp());
 }
 
+
 class MyApp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -35,22 +39,44 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.orange,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: const AuthenticationWrapper(),
+        home: AuthenticationWrapper(),
       ),
     );
   }
 }
 
 class AuthenticationWrapper extends StatelessWidget {
-  const AuthenticationWrapper({Key? key}) : super(key: key);
+  AuthenticationWrapper({Key? key}) : super(key: key);
+
+  bool docExists = false;
+
+  fetchUserDoc() async {
+    String userID;
+    User getUser = FirebaseAuth.instance.currentUser!;
+    userID = getUser.uid;
+
+    DocumentSnapshot ds = await FirebaseFirestore.instance.collection('users').doc(userID).get();
+
+    if (ds.exists) {
+      docExists = true;
+    } else {
+      docExists = false;
+    }
+
+  }
+
 
   @override
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User?>();
+    fetchUserDoc();
 
     if (firebaseUser != null) {
 
-      return HomePage();
+        if(docExists = false) {
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) => EditProfilePage()));
+        }
+        return const HomePage();
 
     }
       return SignInPage();

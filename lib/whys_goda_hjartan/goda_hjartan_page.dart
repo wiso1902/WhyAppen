@@ -8,6 +8,9 @@ class GodaHjartan extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Why's goda hjärtan", style: TextStyle(color: Colors.white),),
+      ),
       body: SafeArea(
         child: Column(
           children: [
@@ -35,6 +38,7 @@ class GodaHjartan extends StatelessWidget {
               color: Colors.orange,
               child: TextButton(
                   onPressed: (){
+                    Navigator.of(context).push(_createRoute1());
                   },
                   child: const Text(
                     'Lägg till träning',
@@ -52,8 +56,9 @@ class GodaHjartan extends StatelessWidget {
               elevation: 8,
               color: Colors.orange,
               child: TextButton(
-                onPressed: () => Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => ViewData())),
+                onPressed: () {
+                  Navigator.of(context).push(_createRoute());
+                },
                 child: const Text(
                   'Se alla träningar',
                   style: TextStyle(
@@ -66,6 +71,42 @@ class GodaHjartan extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+  Route _createRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => const ViewData(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+
+        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
+
+  Route _createRoute1() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => AddData(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(0.0, 1.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+
+        var tween = Tween(begin: begin, end: end).chain(
+            CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
     );
   }
 }
