@@ -1,9 +1,47 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../addData_page/add_data.dart';
+import '../profile_page/edit_profile.dart';
 import '../viewData_page/view_data.dart';
 
-class GodaHjartan extends StatelessWidget {
-  const GodaHjartan({Key? key}) : super(key: key);
+
+class GodaHjartan extends StatefulWidget {
+  GodaHjartan({Key? key}) : super(key: key);
+
+  @override
+  State<GodaHjartan> createState() => _GodaHjartanState();
+}
+
+class _GodaHjartanState extends State<GodaHjartan> {
+  bool docExists = false;
+
+  fetchUserDoc() async {
+    String userID;
+    User getUser = FirebaseAuth.instance.currentUser!;
+    userID = getUser.uid;
+
+    DocumentSnapshot ds = await FirebaseFirestore.instance.collection('users').doc(userID).get();
+
+    if (ds.exists) {
+      docExists = true;
+    } else {
+      docExists = false;
+    }
+
+  }
+
+  @override
+  void initState(){
+    super.initState();
+    fetchUserDoc();
+  }
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -37,16 +75,22 @@ class GodaHjartan extends StatelessWidget {
               elevation: 8,
               color: Colors.orange,
               child: TextButton(
-                  onPressed: (){
+                onPressed: (){
+                  fetchUserDoc();
+                  if(docExists == false) {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => EditProfilePage()));
+                    Fluttertoast.showToast(msg: 'Spara ett namn först');
+                  } else {
                     Navigator.of(context).push(_createRoute1());
-                  },
-                  child: const Text(
-                    'Lägg till träning',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 32),
-                  ),
+                  }
+                },
+                child: const Text(
+                  'Lägg till träning',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 32),
+                ),
               ),
             ),
             SizedBox(height: 50),
@@ -73,6 +117,8 @@ class GodaHjartan extends StatelessWidget {
       ),
     );
   }
+}
+
   Route _createRoute() {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => const ViewData(),
@@ -109,4 +155,3 @@ class GodaHjartan extends StatelessWidget {
       },
     );
   }
-}

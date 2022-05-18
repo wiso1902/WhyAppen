@@ -48,35 +48,16 @@ class MyApp extends StatelessWidget {
 class AuthenticationWrapper extends StatelessWidget {
   AuthenticationWrapper({Key? key}) : super(key: key);
 
-  bool docExists = false;
 
-  fetchUserDoc() async {
-    String userID;
-    User getUser = FirebaseAuth.instance.currentUser!;
-    userID = getUser.uid;
-
-    DocumentSnapshot ds = await FirebaseFirestore.instance.collection('users').doc(userID).get();
-
-    if (ds.exists) {
-      docExists = true;
-    } else {
-      docExists = false;
-    }
-
-  }
 
 
   @override
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User?>();
-    fetchUserDoc();
 
     if (firebaseUser != null) {
 
-        if(docExists = false) {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => EditProfilePage()));
-        }
-        return const HomePage();
+      return HomePage();
 
     }
       return SignInPage();

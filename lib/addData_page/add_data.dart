@@ -144,7 +144,7 @@ class _AddDataState extends State<AddData> {
 
 
     scrollController = FixedExtentScrollController(initialItem: index);
-    timeController = TextEditingController(text: '0');
+    timeController = TextEditingController(text: '20');
   }
 
   @override
@@ -222,9 +222,10 @@ class _AddDataState extends State<AddData> {
                   ),
                   const SizedBox(height: 8,
                   ),
-                  TextField(decoration: InputDecoration(
+                  TextField(
+                    decoration: InputDecoration(
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12)
+                        borderRadius: BorderRadius.circular(16)
                     ),
                   ),
                     keyboardType: TextInputType.number,
@@ -240,9 +241,10 @@ class _AddDataState extends State<AddData> {
               child: Container(width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.orange,
-                  borderRadius: BorderRadius.circular(32),
+                  borderRadius: BorderRadius.circular(16),
                 ),
                 child: CupertinoButton.filled(
+                  borderRadius: BorderRadius.circular(16),
                     child: Text(items[index],
                         style: const TextStyle(
                             color: Colors.white,
@@ -282,27 +284,35 @@ class _AddDataState extends State<AddData> {
               ),
             ),
             /*SEND FUNKTION */
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Colors.orange,
-                  borderRadius: BorderRadius.circular(16),
+
+            SizedBox(height: 250),
+
+            Material(
+              borderRadius: BorderRadius.circular(16),
+              clipBehavior: Clip.antiAliasWithSaveLayer,
+              elevation: 14,
+              color: Colors.orange,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.orange,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: TextButton(
+                      onPressed: () {
+                        setDataTr();
+                        setDataTop();
+                        sendBeerBurger();
+                        Fluttertoast.showToast(msg: "Träning tillagd");
+                      },
+                      child: const Text('Spara Träning',
+                          style: TextStyle(
+                            fontSize: 32,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ))),
                 ),
-                child: TextButton(
-                    onPressed: () {
-                      setDataTr();
-                      setDataTop();
-                      sendBeerBurger();
-                      Fluttertoast.showToast(msg: "Träning tillagd");
-                    },
-                    child: const Text('Spara Träning',
-                        style: TextStyle(
-                          fontSize: 32,
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                        ))),
               ),
             ),
           ],
