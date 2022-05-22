@@ -26,9 +26,11 @@ class _ViewDataState extends State<ViewData> {
   bool isChecked = false;
   late String total = "0";
 
-  Future getImage(String userID) async {
+  getImage(String userID) async {
+    String image;
     DocumentSnapshot getImagePath = await FirebaseFirestore.instance.collection('users').doc(userID).get();
-    return getImagePath.get('imagePath');
+    image = getImagePath.get('imagePath');
+    return image;
   }
 
   getTotal() async {
@@ -85,6 +87,7 @@ class _ViewDataState extends State<ViewData> {
                 itemBuilder: (context, index) {
                   QueryDocumentSnapshot user = snapshot.data!.docs[index];
                   String userID = user['userID'];
+                  String image = getImage(userID);
                   return AnimationConfiguration.staggeredList(
                     position: index,
                     duration: const Duration(seconds: 1),
@@ -94,7 +97,7 @@ class _ViewDataState extends State<ViewData> {
                         child: Card(
                           child: ListTile(
                             leading: CircleAvatar(radius: 30, backgroundImage: NetworkImage('https://firebasestorage.googleapis.com/v0/b/why-appen.appspot.com/o/why-avatar.png?alt=media&token=47dd9052-b409-4254-87d4-53f1ded04869')),
-                            title: Text('${data.docs[index]['name']}'),
+                            title: Text('${data.docs[index]['name']} $image'),
                             subtitle: Text('Träningar ${data.docs[index]['totalTr']}'),
                             trailing: Text(' + ${data.docs[index]['totalTr'] * 20 } Kr',
                               style: TextStyle(color: Colors.green),),

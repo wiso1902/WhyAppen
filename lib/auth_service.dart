@@ -1,4 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:why_appen/widgets/database.dart';
 
 
@@ -18,7 +20,8 @@ class AuthenticationService {
       await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
       return "Signed in";
     } on FirebaseAuthException catch (e) {
-      return e.message;
+      String error = e.message.toString();
+      Fluttertoast.showToast(msg: error, toastLength: Toast.LENGTH_LONG, textColor: Colors.orange, backgroundColor: Colors.white);
     }
   }
 

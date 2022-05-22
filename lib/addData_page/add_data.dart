@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -17,7 +18,7 @@ class _AddDataState extends State<AddData> {
   CollectionReference tr = FirebaseFirestore.instance.collection('tr');
   CollectionReference top = FirebaseFirestore.instance.collection('top');
   CollectionReference total = FirebaseFirestore.instance.collection('total');
-  CollectionReference beerBurgers = FirebaseFirestore.instance.collection('beerBurger');
+  CollectionReference val = FirebaseFirestore.instance.collection('val');
   final FirebaseAuth auth = FirebaseAuth.instance;
 
   late DatabaseReference databaseReference;
@@ -37,53 +38,49 @@ class _AddDataState extends State<AddData> {
   int totalTr = 1;
   int totalTr1 = 0;
   late int totala;
-  int beer = 0;
+  double beer = 0;
   int burger = 0;
 
-  final items = [
-    'Prommenad',
-    'Skidor',
-    'Joggning',
-    'Gym',
-    'Simmning',
-    'Hockey',
-    'Rid pass',
-    'Hund Prommenad',
-    'Golf',
-    '+'
-  ];
+  @override
+  void initState() {
+    super.initState();
+    fetchUserID();
+    getTotala();
+    getName();
+    getUserScore();
+    getOk();
+    fetchItems();
 
-  getBeer() async {
-    DocumentSnapshot ds = await FirebaseFirestore.instance.collection('beerBurger').doc(userID).get();
-    beer = ds.get('beer');
-    burger = ds.get('burger');
+
+    scrollController = FixedExtentScrollController(initialItem: index);
+    timeController = TextEditingController(text: '20');
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    timeController.dispose();
+
+    super.dispose();
+  }
+
+  late final items;
+  fetchItems() async {
+    DocumentSnapshot ds = await FirebaseFirestore.instance.collection('val').doc('items').get();
+    setState((){
+      items = ds.get('items');
+    });
   }
 
   calcBeer(){
-    getBeer();
+    int time = int.parse(timeController.toString());
+    double cal = time/30.ceil();
+
+    beer = beer + cal;
     if (beer == 3){
       burger++;
       beer = 0;
-    } else {
-      beer++;
     }
-  }
-
-  sendBeerBurger() async {
-    getBeer();
-    calcBeer();
-    if (okBeer == false){
-      beerBurgers.doc(userID).set({
-        'beer': 1,
-        'burger': 0,
-      });
-    } if (okBeer == true){
-      beerBurgers.doc(userID).update({
-        'beer': beer,
-        'burger': burger,
-      });
-    }
-
   }
 
   fetchUserID() async {
@@ -117,42 +114,11 @@ class _AddDataState extends State<AddData> {
 
   }
 
-  getOkBeer() async {
-    fetchUserID();
-    FirebaseFirestore.instance.collection('beerBurger').doc(userID).get().then((onExists) {
-      onExists.exists ? okBeer = true : okBeer = false;
-    });
-  }
-
   getOk() async{
     fetchUserID();
     FirebaseFirestore.instance.collection('top').doc(userID).get().then((onExists) {
     onExists.exists ? ok = true : ok = false;
     });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    fetchUserID();
-    getTotala();
-    getName();
-    getUserScore();
-    getOk();
-    getBeer();
-    getOkBeer();
-
-
-    scrollController = FixedExtentScrollController(initialItem: index);
-    timeController = TextEditingController(text: '20');
-  }
-
-  @override
-  void dispose() {
-    scrollController.dispose();
-    timeController.dispose();
-
-    super.dispose();
   }
 
 
@@ -163,7 +129,7 @@ class _AddDataState extends State<AddData> {
       'datum': getText(),
       'tid': dateInt,
       'userID': userID,
-    }).then((value) => print('user added')).catchError((error)=> print('fel: $error'));
+    }).then((value) => Fluttertoast.showToast(msg: "Träning tillagd", textColor: Colors.orange, backgroundColor: Colors.white)).catchError((error)=> Fluttertoast.showToast(msg: 'error $error'));
   }
 
   setDataTop() async {
@@ -174,19 +140,19 @@ class _AddDataState extends State<AddData> {
         'totalTr': totalTr,
         'name': name,
         'userID': userID,
-      }).then((value) => print('Top added')).catchError((error)=> print('fel: $error'));
+      }).then((value) => print('Top added')).catchError((error)=> Fluttertoast.showToast(msg: 'error $error', textColor: Colors.orange, backgroundColor: Colors.white));
     }
     else if (ok == true){
       top.doc(userID).update({
         'totalTr': totalTr1 + 1,
         'name': name,
         'userID': userID,
-      }).then((value) => print('Top update')).catchError((error)=> print('fel: $error'));
+      }).then((value) => print('Top update')).catchError((error)=> Fluttertoast.showToast(msg: 'error $error', textColor: Colors.orange, backgroundColor: Colors.white));
     }
 
     total.doc('total').update({
       'total': totala + 1,
-    }).then((value) => print('Top update')).catchError((error)=> print('fel: $error'));
+    }).then((value) => print('Top update')).catchError((error)=> Fluttertoast.showToast(msg: 'error $error', textColor: Colors.orange, backgroundColor: Colors.white));
 
   }
 
@@ -303,8 +269,6 @@ class _AddDataState extends State<AddData> {
                       onPressed: () {
                         setDataTr();
                         setDataTop();
-                        sendBeerBurger();
-                        Fluttertoast.showToast(msg: "Träning tillagd");
                       },
                       child: const Text('Spara Träning',
                           style: TextStyle(

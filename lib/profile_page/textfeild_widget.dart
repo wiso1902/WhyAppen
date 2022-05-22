@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
@@ -164,7 +165,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
         print('ingen bild vald');
       }
     } else {
-      print('Ge tillåtelse och försök igen');
+      Fluttertoast.showToast(msg: 'Ge tillåtelse och försök igen', textColor: Colors.orange, backgroundColor: Colors.white);
     }
   }
 

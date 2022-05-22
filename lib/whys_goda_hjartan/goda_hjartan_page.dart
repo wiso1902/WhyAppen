@@ -38,11 +38,6 @@ class _GodaHjartanState extends State<GodaHjartan> {
     fetchUserDoc();
   }
 
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,10 +71,9 @@ class _GodaHjartanState extends State<GodaHjartan> {
               color: Colors.orange,
               child: TextButton(
                 onPressed: (){
-                  fetchUserDoc();
                   if(docExists == false) {
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => EditProfilePage()));
-                    Fluttertoast.showToast(msg: 'Spara ett namn först');
+                    Fluttertoast.showToast(msg: 'Spara ett namn först',toastLength: Toast.LENGTH_LONG, textColor: Colors.orange, backgroundColor: Colors.white);
                   } else {
                     Navigator.of(context).push(_createRoute1());
                   }
