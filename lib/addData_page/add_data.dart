@@ -30,6 +30,7 @@ class _AddDataState extends State<AddData> {
   DateTime? date;
   DateTime? date1;
   String name = "";
+  String imagePath = "";
   String userID ="";
   String userId ="";
 
@@ -46,7 +47,7 @@ class _AddDataState extends State<AddData> {
     super.initState();
     fetchUserID();
     getTotala();
-    getName();
+    getNameAndImage();
     getUserScore();
     getOk();
     fetchItems();
@@ -64,12 +65,13 @@ class _AddDataState extends State<AddData> {
     super.dispose();
   }
 
-  late final items;
+  late List items = [
+    'Välj träning'
+  ];
   fetchItems() async {
     DocumentSnapshot ds = await FirebaseFirestore.instance.collection('val').doc('items').get();
-    setState((){
-      items = ds.get('items');
-    });
+    items = ds.get('items');
+
   }
 
   calcBeer(){
@@ -96,10 +98,11 @@ class _AddDataState extends State<AddData> {
     }
   }
 
-  getName() async {
+  getNameAndImage() async {
     fetchUserID();
     DocumentSnapshot ds = await FirebaseFirestore.instance.collection('users').doc(userID).get();
     name = ds.get('name');
+    imagePath = ds.get('imagePath');
   }
 
   getTotala() async {
@@ -128,6 +131,7 @@ class _AddDataState extends State<AddData> {
       'träning': items[index],
       'datum': getText(),
       'tid': dateInt,
+      'imagePath': imagePath,
       'userID': userID,
     }).then((value) => Fluttertoast.showToast(msg: "Träning tillagd", textColor: Colors.orange, backgroundColor: Colors.white)).catchError((error)=> Fluttertoast.showToast(msg: 'error $error'));
   }
@@ -139,6 +143,7 @@ class _AddDataState extends State<AddData> {
       top.doc(userID).set({
         'totalTr': totalTr,
         'name': name,
+        'imagePath': imagePath,
         'userID': userID,
       }).then((value) => print('Top added')).catchError((error)=> Fluttertoast.showToast(msg: 'error $error', textColor: Colors.orange, backgroundColor: Colors.white));
     }
@@ -146,6 +151,7 @@ class _AddDataState extends State<AddData> {
       top.doc(userID).update({
         'totalTr': totalTr1 + 1,
         'name': name,
+        'imagePath': imagePath,
         'userID': userID,
       }).then((value) => print('Top update')).catchError((error)=> Fluttertoast.showToast(msg: 'error $error', textColor: Colors.orange, backgroundColor: Colors.white));
     }
