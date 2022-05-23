@@ -35,6 +35,7 @@ class _GodaHjartanState extends State<GodaHjartan> {
   @override
   void initState(){
     super.initState();
+    fetchUserDoc();
   }
 
   @override
@@ -70,7 +71,6 @@ class _GodaHjartanState extends State<GodaHjartan> {
               color: Colors.orange,
               child: TextButton(
                 onPressed: (){
-                  fetchUserDoc();
                   if(docExists == false) {
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => EditProfilePage()));
                     Fluttertoast.showToast(msg: 'Spara ett namn först',toastLength: Toast.LENGTH_LONG, textColor: Colors.orange, backgroundColor: Colors.white);

@@ -61,7 +61,7 @@ class _ViewDataState extends State<ViewData> {
                   setState(() => isChecked = !isChecked);
                   getTotal();
                 },
-                icon: Icon(FontAwesomeIcons.arrowUpWideShort))
+                icon: const Icon(FontAwesomeIcons.arrowUpWideShort))
           ],
           title: Center(child: Text('Insamlat: $total Kr')),
         ),
@@ -74,10 +74,10 @@ class _ViewDataState extends State<ViewData> {
       stream: trViewTop,
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
-          return Text('Nått gick snett');
+          return const Text('Nått gick snett');
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text('Datan hämtas');
+          return const Text('Datan hämtas');
         }
         final data = snapshot.requireData;
         return AnimationLimiter(
@@ -116,10 +116,10 @@ class _ViewDataState extends State<ViewData> {
       stream: trViewDate,
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
-          return Text('Nått gick snett');
+          return const Text('Nått gick snett');
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text('Datan hämtas');
+          return const Text('Datan hämtas');
         }
         final data = snapshot.requireData;
         return AnimationLimiter(

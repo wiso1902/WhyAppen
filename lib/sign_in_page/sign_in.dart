@@ -112,8 +112,7 @@ class SignInPage extends StatelessWidget {
                                 onPressed: () {
                                   context.read<AuthenticationService>().signIn(
                                         email: emailController.text.trim(),
-                                        password:
-                                            passwordController.text.trim(),
+                                        password: passwordController.text.trim(),
                                       );
                                 },
                                 child: const Padding(

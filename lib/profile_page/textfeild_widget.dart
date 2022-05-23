@@ -30,12 +30,20 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   late final TextEditingController controller;
   String userID = "";
-  late String imagePath = 'https://firebasestorage.googleapis.com/v0/b/why-appen.appspot.com/o/why-avatar.png?alt=media&token=47dd9052-b409-4254-87d4-53f1ded04869';
+  late String imagePath = '';
   late bool ok = false;
+  late String name = "";
 
   fetchUserID() async {
     User getUser = FirebaseAuth.instance.currentUser!;
     userID = getUser.uid;
+  }
+
+  getNameAndImage() async {
+    fetchUserID();
+    DocumentSnapshot ds = await FirebaseFirestore.instance.collection('users').doc(userID).get();
+    imagePath = ds.get('imagePath');
+    name = ds.get('name');
   }
 
   @override
@@ -43,6 +51,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
     super.initState();
     fetchUserID();
     getOk();
+    getNameAndImage();
 
     controller = TextEditingController(text: widget.text);
   }
@@ -135,9 +144,6 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
     );
   }
 
-  piickImage() {
-
-  }
 
   pickImage() async {
     final storage = FirebaseStorage.instance;

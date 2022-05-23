@@ -257,7 +257,7 @@ class _AddDataState extends State<AddData> {
             ),
             /*SEND FUNKTION */
 
-            SizedBox(height: 250),
+            SizedBox(height: 200),
 
             Material(
               borderRadius: BorderRadius.circular(16),
