@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:why_appen/widgets/appbar_widget.dart';
 import 'package:why_appen/profile_page/edit_profile.dart';
@@ -21,7 +22,7 @@ class _ProfilePageState extends State<ProfilePage> {
   String imagePath = "https://firebasestorage.googleapis.com/v0/b/why-appen.appspot.com/o/why-avatar.png?alt=media&token=47dd9052-b409-4254-87d4-53f1ded04869";
   String name = "Why anställd";
   late bool okBeer = true;
-  late String beer = "0";
+  late String beer = "2";
   late String burger = "0";
   late String tr = "0";
   late String pengar = "0";
@@ -98,7 +99,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 buildDevider(),
                 buildButton2(
                   context,
-                  burger,
+                  '-',
                   Icon(
                     FontAwesomeIcons.burger,
                     size: 20,
@@ -107,7 +108,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 buildDevider(),
                 buildButton3(
                   context,
-                  beer,
+                  '-',
                   Icon(
                     FontAwesomeIcons.beerMugEmpty,
                     color: Colors.orangeAccent,
@@ -157,7 +158,9 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget buildButton1(BuildContext context, String value, Icon icon) =>
       MaterialButton(
         padding: EdgeInsets.symmetric(vertical: 10),
-        onPressed: () {},
+        onPressed: () {
+          Fluttertoast.showToast(msg: 'Kommer I release', textColor: Colors.orange,toastLength: Toast.LENGTH_LONG, backgroundColor: Colors.white);
+        },
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -179,7 +182,9 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget buildButton2(BuildContext context, String value, Icon icon) =>
       MaterialButton(
         padding: EdgeInsets.symmetric(vertical: 10),
-        onPressed: () {},
+        onPressed: () {
+          Fluttertoast.showToast(msg: 'Kommer I release', textColor: Colors.orange,toastLength: Toast.LENGTH_LONG, backgroundColor: Colors.white);
+        },
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -201,7 +206,9 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget buildButton3(BuildContext context, String value, Icon icon) =>
       MaterialButton(
         padding: EdgeInsets.symmetric(vertical: 10),
-        onPressed: () {},
+        onPressed: () {
+          Fluttertoast.showToast(msg: 'Kommer I release', textColor: Colors.orange,toastLength: Toast.LENGTH_LONG, backgroundColor: Colors.white);
+        },
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,

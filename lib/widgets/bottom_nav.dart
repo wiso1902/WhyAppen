@@ -11,6 +11,8 @@ class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      backgroundColor: Colors.grey[100],
+      unselectedItemColor: Colors.orangeAccent,
       items: const[
         BottomNavigationBarItem(
           icon: Icon(
@@ -22,6 +24,7 @@ class BottomNavBar extends StatelessWidget {
         BottomNavigationBarItem(
           icon: Icon(
             FontAwesomeIcons.imagePortrait,
+            color: Colors.orangeAccent,
             size: 20,
           ),
           label: 'Profil',

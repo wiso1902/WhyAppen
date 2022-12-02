@@ -14,21 +14,17 @@ class SignInPage extends StatelessWidget {
     return Stack(
       children: [
         Scaffold(
+          backgroundColor: Colors.grey[300],
           body: SingleChildScrollView(
             child: SafeArea(
               child: Column(
                 children: [
-                  Container(
-                    height: 150,
-                    child: const Center(
-                      child: Text(
-                        'Why Appen',
-                        style: kHeading,
-                      ),
-                    ),
-                  ),
                   const SizedBox(
                     height: 50,
+                  ),
+                  Image.asset('assets/images/why-logotyp-clean.webp', width: 300, height: 150),
+                  const SizedBox(
+                    height: 20,
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 40),
@@ -40,7 +36,7 @@ class SignInPage extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(vertical: 12),
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: Colors.grey[600]?.withOpacity(0.4),
+                                  color: Colors.grey[500]?.withOpacity(0.4),
                                   borderRadius: BorderRadius.circular(16),
                                 ),
                                 child: TextField(
@@ -69,7 +65,7 @@ class SignInPage extends StatelessWidget {
                             ),
                             Container(
                               decoration: BoxDecoration(
-                                color: Colors.grey[600]?.withOpacity(0.4),
+                                color: Colors.grey[500]?.withOpacity(0.4),
                                 borderRadius: BorderRadius.circular(16),
                               ),
                               child: TextField(
@@ -82,7 +78,7 @@ class SignInPage extends StatelessWidget {
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 20),
                                     child: Icon(
-                                      FontAwesomeIcons.envelope,
+                                      FontAwesomeIcons.lock,
                                       color: Colors.white,
                                       size: 30,
                                     ),
@@ -91,6 +87,7 @@ class SignInPage extends StatelessWidget {
                                 ),
                                 style: kBodytext,
                                 keyboardType: TextInputType.emailAddress,
+                                obscureText: true,
                                 textInputAction: TextInputAction.done,
                                 controller: passwordController,
                               ),
@@ -100,7 +97,7 @@ class SignInPage extends StatelessWidget {
                         Column(
                           children: [
                             const SizedBox(
-                              height: 150,
+                              height: 10,
                             ),
                             Container(
                               width: double.infinity,

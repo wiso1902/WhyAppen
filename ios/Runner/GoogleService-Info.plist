@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>597814628837-4g42cvv2rb9ts3gnkg707kq1nu6ddpkk.apps.googleusercontent.com</string>
+	<string>597814628837-e02vc2flkbnoqpdea544ibq9sjljdc99.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.597814628837-4g42cvv2rb9ts3gnkg707kq1nu6ddpkk</string>
+	<string>com.googleusercontent.apps.597814628837-e02vc2flkbnoqpdea544ibq9sjljdc99</string>
 	<key>API_KEY</key>
 	<string>AIzaSyDP_ne7LeucScEdo7dTDDXwhJy_m0DjSmw</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.whyAppen</string>
+	<string>com.WhyAppen.whyappen</string>
 	<key>PROJECT_ID</key>
 	<string>why-appen</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,7 +29,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:597814628837:ios:ebc89a430e4f85de215f0c</string>
+	<string>1:597814628837:ios:73bcacad80bda3fe215f0c</string>
 	<key>DATABASE_URL</key>
 	<string>https://why-appen-default-rtdb.europe-west1.firebasedatabase.app</string>
 </dict>

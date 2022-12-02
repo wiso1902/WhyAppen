@@ -30,9 +30,10 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
   CollectionReference users = FirebaseFirestore.instance.collection('users');
   late final TextEditingController controller;
   String userID = "";
-  late String imagePath = '';
+  String imagePath = 'https://firebasestorage.googleapis.com/v0/b/why-appen.appspot.com/o/why-avatar.png?alt=media&token=47dd9052-b409-4254-87d4-53f1ded04869';
   late bool ok = false;
   late String name = "";
+  late String showName = controller.toString();
 
   fetchUserID() async {
     User getUser = FirebaseAuth.instance.currentUser!;
@@ -42,7 +43,6 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
   getNameAndImage() async {
     fetchUserID();
     DocumentSnapshot ds = await FirebaseFirestore.instance.collection('users').doc(userID).get();
-    imagePath = ds.get('imagePath');
     name = ds.get('name');
   }
 
@@ -119,6 +119,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
           ),
           TextButton(
               onPressed: () {
+                showAlertDialog(context);
                 addUser();
               },
               child: Text('Spara'))
@@ -144,13 +145,27 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
     );
   }
 
+  void showAlertDialog(BuildContext context) => showDialog(
+    context: context,
+    builder: (BuildContext context) => AlertDialog(
+      title: const Text('Profil uppdaterad'),
+      content: Text('Nu har din profil skapats/uppdaterats'),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () => Navigator.pop(context, 'OK'),
+          child: const Text('OK'),
+        ),
+      ],
+    ),
+  );
+
 
   pickImage() async {
     final storage = FirebaseStorage.instance;
     final picker = ImagePicker();
     await Permission.photos.request();
 
-    var permissionStatus = await Permission.photos.status;
+    final permissionStatus = await Permission.photos.status;
 
     if (permissionStatus.isGranted) {
       var image = await picker.pickImage(source: ImageSource.gallery);

@@ -36,6 +36,7 @@ class _AddDataState extends State<AddData> {
 
   late bool ok = false;
   late bool okBeer = false;
+  late String pop = items[index];
   int totalTr = 1;
   int totalTr1 = 0;
   late int totala;
@@ -65,6 +66,15 @@ class _AddDataState extends State<AddData> {
     super.dispose();
   }
 
+//oid updateCal(){
+// int n = int.parse(timeController);
+// if(n < 60){
+//
+// } else {
+//
+// }
+//
+
   late List items = [
     'Välj träning'
   ];
@@ -72,17 +82,6 @@ class _AddDataState extends State<AddData> {
     DocumentSnapshot ds = await FirebaseFirestore.instance.collection('val').doc('items').get();
     items = ds.get('items');
 
-  }
-
-  calcBeer(){
-    int time = int.parse(timeController.toString());
-    double cal = time/30.ceil();
-
-    beer = beer + cal;
-    if (beer == 3){
-      burger++;
-      beer = 0;
-    }
   }
 
   fetchUserID() async {
@@ -126,6 +125,8 @@ class _AddDataState extends State<AddData> {
 
 
   setDataTr() {
+    late String dateString = makeDateInt();
+    late var dateInt = int.parse(dateString);
     tr.add({
       'name': name,
       'träning': items[index],
@@ -133,10 +134,11 @@ class _AddDataState extends State<AddData> {
       'tid': dateInt,
       'imagePath': imagePath,
       'userID': userID,
-    }).then((value) => Fluttertoast.showToast(msg: "Träning tillagd", textColor: Colors.orange, backgroundColor: Colors.white)).catchError((error)=> Fluttertoast.showToast(msg: 'error $error'));
+    }).then((value) => print('Top added')).catchError((error)=> Fluttertoast.showToast(msg: 'error $error', textColor: Colors.orange, backgroundColor: Colors.white));
   }
 
   setDataTop() async {
+    getOk();
     getUserScore();
     getTotala();
     if(ok == false){
@@ -147,6 +149,7 @@ class _AddDataState extends State<AddData> {
         'userID': userID,
       }).then((value) => print('Top added')).catchError((error)=> Fluttertoast.showToast(msg: 'error $error', textColor: Colors.orange, backgroundColor: Colors.white));
     }
+
     else if (ok == true){
       top.doc(userID).update({
         'totalTr': totalTr1 + 1,
@@ -163,14 +166,22 @@ class _AddDataState extends State<AddData> {
   }
 
   String makeDateInt(){
+    if(date == null){
+      return 'error';
+    } else {
+      return DateFormat('yyyyMMdd').format(date!);
+    }
+  }
+
+  String makeDateshow(){
     if(date1 == null){
       return 'error';
     } else {
-      return DateFormat('yyyyMMdd').format(date1!);
+      return DateFormat('yyyy-MM-dd').format(date1!);
     }
   }
-  late String dateString = makeDateInt();
-  late var dateInt = int.parse(dateString);
+
+  late String dateShow = makeDateshow();
 
   @override
   Widget build(BuildContext context) {
@@ -233,7 +244,7 @@ class _AddDataState extends State<AddData> {
                               CupertinoActionSheet(
                                 actions: [buildPicker()],
                                 cancelButton: CupertinoActionSheetAction(
-                                  child: const Text('Cancel'),
+                                  child: const Text('Ok'),
                                   onPressed: () => Navigator.pop(context),
                                 ),
                               ));
@@ -252,7 +263,7 @@ class _AddDataState extends State<AddData> {
                 child: TextButton(
                     onPressed: () => pickDate(context),
                     child: Text(getText(), style: const TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),)),
+                        color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),)),
               ),
             ),
             /*SEND FUNKTION */
@@ -273,8 +284,10 @@ class _AddDataState extends State<AddData> {
                   ),
                   child: TextButton(
                       onPressed: () {
+                        showAlertDialog(context);
                         setDataTr();
                         setDataTop();
+                        dispose();
                       },
                       child: const Text('Spara Träning',
                           style: TextStyle(
@@ -335,4 +348,19 @@ class _AddDataState extends State<AddData> {
             })
         ),
       );
+  
+  void showAlertDialog(BuildContext context) => showDialog(
+    context: context,
+    builder: (BuildContext context) => AlertDialog(
+      title: const Text('Träning tillagd'),
+      content: Text('Din träning $pop, $dateShow är nu sparad'),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () => Navigator.pop(context, 'OK'),
+          child: const Text('OK'),
+        ),
+      ],
+    ),
+  );
 }
+

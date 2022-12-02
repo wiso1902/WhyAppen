@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:why_appen/widgets/database.dart';
 
 
 class AuthenticationService {
@@ -22,15 +21,6 @@ class AuthenticationService {
     } on FirebaseAuthException catch (e) {
       String error = e.message.toString();
       Fluttertoast.showToast(msg: error, toastLength: Toast.LENGTH_LONG, textColor: Colors.orange, backgroundColor: Colors.white);
-    }
-  }
-
-  Future<String?> signUp({required String email, required String password}) async {
-    try {
-      await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
-      return "Signed up";
-    } on FirebaseAuthException catch (e) {
-      return e.message;
     }
   }
 

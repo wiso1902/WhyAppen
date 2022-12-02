@@ -41,15 +41,15 @@ class HomePage extends StatelessWidget {
                     child: Column(
                       children: [
                         Ink.image(
-                          width: 160,
-                          height: 120,
+                          width: 150,
+                          height: 100,
                           fit: BoxFit.cover,
-                          image: const AssetImage('assets/images/goda_hjartan.jpg'),
+                          image: AssetImage('assets/images/heart.png'),
                         ),
                         const SizedBox(height: 6),
                         const Text(
                           "Why's Goda Hjärtan",
-                          style: TextStyle(fontSize: 16, color: Colors.white),
+                          style: TextStyle(fontSize: 13, color: Colors.white),
                         ),
                       ],
                     ),
@@ -68,20 +68,20 @@ class HomePage extends StatelessWidget {
                   child: InkWell(
                     splashColor: Colors.orange,
                     onTap: () {
-                      Fluttertoast.showToast(msg: 'Kommer Snart');
+                      showAlertDialog(context);
                     },
                     child: Column(
                       children: [
                         Ink.image(
-                          width: 160,
-                          height: 120,
-                          fit: BoxFit.fill,
-                          image: AssetImage('assets/images/why-loggan.jpg'),
+                          width: 150,
+                          height: 100,
+                          fit: BoxFit.cover,
+                          image: AssetImage('assets/images/why-loggan.png'),
                         ),
                         SizedBox(height: 6),
                         Text(
                           "Why Flödet",
-                          style: TextStyle(fontSize: 16, color: Colors.white),
+                          style: TextStyle(fontSize: 13, color: Colors.white),
                         ),
                       ],
                     ),
@@ -95,4 +95,19 @@ class HomePage extends StatelessWidget {
       bottomNavigationBar: BottomNavBar(),
     );
   }
+
+  void showAlertDialog(BuildContext context) => showDialog(
+    context: context,
+    builder: (BuildContext context) => AlertDialog(
+      title: const Text('Kommer snart'),
+      content: const Text('Ett exempel på att ni kan lägga till fler funktioner i appen'),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () => Navigator.pop(context, 'OK'),
+          child: const Text('OK'),
+        ),
+      ],
+    ),
+  );
+
 }

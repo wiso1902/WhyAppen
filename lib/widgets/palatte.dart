@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 const TextStyle kHeading = TextStyle(
-    fontSize: 60,
+    fontSize: 50,
     fontWeight: FontWeight.bold,
     color: Colors.orange,
 );

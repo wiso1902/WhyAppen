@@ -56,7 +56,7 @@ class _GodaHjartanState extends State<GodaHjartan> {
                     clipBehavior: Clip.antiAliasWithSaveLayer,
                     elevation: 8,
                     child: const Image(
-                      image: AssetImage('assets/images/goda_hjartan.jpg'),
+                      image: AssetImage('assets/images/heart.png'),
                       width: 250,
                       height: 200,
                       fit: BoxFit.cover,
@@ -72,8 +72,7 @@ class _GodaHjartanState extends State<GodaHjartan> {
               child: TextButton(
                 onPressed: (){
                   if(docExists == false) {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => EditProfilePage()));
-                    Fluttertoast.showToast(msg: 'Spara ett namn först',toastLength: Toast.LENGTH_LONG, textColor: Colors.orange, backgroundColor: Colors.white);
+                    showAlertDialog(context);
                   } else {
                     Navigator.of(context).push(_createRoute1());
                   }
@@ -111,6 +110,21 @@ class _GodaHjartanState extends State<GodaHjartan> {
       ),
     );
   }
+
+  void showAlertDialog(BuildContext context) => showDialog(
+    context: context,
+    builder: (BuildContext context) => AlertDialog(
+      title: const Text('Skapa profil'),
+      content: const Text('Innan du börjar spara träningar behöver du skapa en profil och spara ett namn, gå till startsidan och tryck på profil => kugghjulet'),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () => Navigator.pop(context, 'OK'),
+          child: const Text('OK'),
+        ),
+      ],
+    ),
+  );
+
 }
 
   Route _createRoute() {
