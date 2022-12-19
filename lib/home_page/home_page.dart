@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:why_appen/viewData_page/view_data.dart';
+import 'package:why_appen/why_flodet/add_post.dart';
 import 'package:why_appen/whys_goda_hjartan/goda_hjartan_page.dart';
 import 'package:why_appen/widgets/bottom_nav.dart';
 
@@ -58,18 +59,15 @@ class HomePage extends StatelessWidget {
               ),
             ),
             Container(
-              child: Hero(
-                tag: 'whyFoldet',
-                child: Material(
+              child:
+                Material(
                   borderRadius: BorderRadius.circular(28),
                   clipBehavior: Clip.antiAliasWithSaveLayer,
                   elevation: 8,
                   color: Colors.orange,
                   child: InkWell(
                     splashColor: Colors.orange,
-                    onTap: () {
-                      showAlertDialog(context);
-                    },
+                    onTap: () => Navigator.of(context).push(_createRoute1()),
                     child: Column(
                       children: [
                         Ink.image(
@@ -88,7 +86,6 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
           ],
         ),
       ),
@@ -96,18 +93,23 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  void showAlertDialog(BuildContext context) => showDialog(
-    context: context,
-    builder: (BuildContext context) => AlertDialog(
-      title: const Text('Kommer snart'),
-      content: const Text('Ett exempel på att ni kan lägga till fler funktioner i appen'),
-      actions: <Widget>[
-        TextButton(
-          onPressed: () => Navigator.pop(context, 'OK'),
-          child: const Text('OK'),
-        ),
-      ],
-    ),
-  );
+}
 
+Route _createRoute1() {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => AddPost(),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(0.0, 1.0);
+      const end = Offset.zero;
+      const curve = Curves.ease;
+
+      var tween = Tween(begin: begin, end: end).chain(
+          CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
 }
