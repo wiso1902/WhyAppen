@@ -28,88 +28,47 @@ class HomePage extends StatelessWidget {
           crossAxisCount: 2,
           children: [
             Container(
-              child: Hero(
-                tag: 'godaHjartan',
-                child: Material(
-                  borderRadius: BorderRadius.circular(28),
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  elevation: 8,
-                  color: Colors.orange,
-                  child: InkWell(
-                    splashColor: Colors.orange,
-                    onTap: () => Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => GodaHjartan())),
-                    child: Column(
-                      children: [
-                        Ink.image(
-                          width: 150,
-                          height: 100,
-                          fit: BoxFit.cover,
-                          image: AssetImage('assets/images/heart.png'),
-                        ),
-                        const SizedBox(height: 6),
-                        const Text(
-                          "Why's Goda Hjärtan",
-                          style: TextStyle(fontSize: 13, color: Colors.white),
-                        ),
-                      ],
-                    ),
+              child: Material(
+                borderRadius: BorderRadius.circular(28),
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                elevation: 8,
+                color: Colors.orange,
+                child: InkWell(
+                  splashColor: Colors.orange,
+                  onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => ViewData())),
+                  child: Ink.image(
+                    width: 150,
+                    height: 100,
+                    fit: BoxFit.cover,
+                    image: AssetImage('assets/images/heart.png'),
                   ),
                 ),
               ),
             ),
             Container(
-              child:
-                Material(
-                  borderRadius: BorderRadius.circular(28),
-                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                  elevation: 8,
-                  color: Colors.orange,
-                  child: InkWell(
-                    splashColor: Colors.orange,
-                    onTap: () => Navigator.of(context).push(_createRoute1()),
-                    child: Column(
-                      children: [
-                        Ink.image(
-                          width: 150,
-                          height: 100,
-                          fit: BoxFit.cover,
-                          image: AssetImage('assets/images/why-loggan.png'),
-                        ),
-                        SizedBox(height: 6),
-                        Text(
-                          "Why Flödet",
-                          style: TextStyle(fontSize: 13, color: Colors.white),
-                        ),
-                      ],
-                    ),
+              child: Material(
+                borderRadius: BorderRadius.circular(28),
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                elevation: 8,
+                color: Colors.orange,
+                child: InkWell(
+                  splashColor: Colors.orange,
+                  onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => AddPost())),
+                  child: Ink.image(
+                    width: 150,
+                    height: 100,
+                    fit: BoxFit.cover,
+                    image: AssetImage('assets/images/why-loggan.png'),
                   ),
                 ),
               ),
+            ),
           ],
         ),
       ),
       bottomNavigationBar: BottomNavBar(),
     );
   }
-
-}
-
-Route _createRoute1() {
-  return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => AddPost(),
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      const begin = Offset(0.0, 1.0);
-      const end = Offset.zero;
-      const curve = Curves.ease;
-
-      var tween = Tween(begin: begin, end: end).chain(
-          CurveTween(curve: curve));
-
-      return SlideTransition(
-        position: animation.drive(tween),
-        child: child,
-      );
-    },
-  );
 }
